@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Java Multithreading | Part 1</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <a href="#home" class="logo">THREAD<span>LAB</span></a>
+      <nav>
+        <a href="#intro">Introduction</a>
+        <a href="#concepts">Concepts</a>
+        <a href="#examples">Examples</a>
+        <a href="#interview">Interview</a>
+      </nav>
+      <a href="#examples" class="nav-btn">Explore Java ↗</a>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <p class="eyebrow">
+            <span class="live-dot"></span> JAVA CONCURRENCY SERIES / 01
+          </p>
+          <h1>One Program.<br />Multiple <span>Threads.</span></h1>
+          <p class="hero-text">
+            Understand Java Multithreading from the basics. Learn how threads
+            work, how to create them, and how Java executes multiple tasks
+            concurrently.
+          </p>
+          <div class="hero-buttons">
+            <a href="#intro" class="primary-btn">Start Learning ↓</a>
+            <a href="#examples" class="secondary-btn">View Java Examples</a>
+          </div>
+          <div class="hero-stats">
+            <div><strong>01</strong><small>PART ONE</small></div>
+            <div><strong>06+</strong><small>CORE CONCEPTS</small></div>
+            <div><strong>Java</strong><small>LANGUAGE</small></div>
+          </div>
+        </div>
+
+        <div class="thread-visual">
+          <div class="visual-label">THREAD EXECUTION MAP</div>
+          <div class="process-box">MAIN PROCESS</div>
+          <div class="connector"></div>
+          <div class="thread-row">
+            <div class="thread-card t1">
+              <span>01</span><strong>Thread A</strong><small>Task One</small>
+            </div>
+            <div class="thread-card t2">
+              <span>02</span><strong>Thread B</strong><small>Task Two</small>
+            </div>
+            <div class="thread-card t3">
+              <span>03</span><strong>Thread C</strong><small>Task Three</small>
+            </div>
+          </div>
+          <div class="execution-line"></div>
+          <p class="visual-caption">
+            Multiple threads make concurrent execution possible.
+          </p>
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+        </div>
+      </section>
+
+      <div class="announcement">
+        <span>LEARNING PATH</span>
+        <p>
+          PART 01: FUNDAMENTALS <span>→</span> PART 02: ADVANCED MULTITHREADING
+        </p>
+      </div>
+
+      <section class="section" id="intro">
+        <div class="section-heading">
+          <p class="eyebrow">01 / GETTING STARTED</p>
+          <h2>What is <span>Multithreading?</span></h2>
+          <p>First, understand the basic idea behind threads in Java.</p>
+        </div>
+
+        <div class="definition-card">
+          <div class="definition-number">01</div>
+          <div>
+            <h3>Definition</h3>
+            <p>
+              Multithreading is a Java feature that allows multiple threads to
+              execute tasks concurrently within a single process. Threads share
+              the process's memory and resources, while each thread has its own
+              execution stack.
+            </p>
+            <p class="telugu">
+              Telugu: Oka program lo multiple tasks ni concurrent ga execute
+              cheyadaniki threads use chestham. Dini valla application
+              responsive ga undadaniki help avutundi.
+            </p>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card">
+            <span class="card-icon">↗</span>
+            <h3>Thread</h3>
+            <p>A thread is a lightweight unit of execution inside a process.</p>
+          </article>
+          <article class="info-card">
+            <span class="card-icon">▦</span>
+            <h3>Process</h3>
+            <p>
+              A process is a running instance of a program with its own
+              resources.
+            </p>
+          </article>
+          <article class="info-card">
+            <span class="card-icon">⌁</span>
+            <h3>Concurrency</h3>
+            <p>
+              Multiple tasks make progress during overlapping periods of time.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section darker" id="concepts">
+        <div class="section-heading">
+          <p class="eyebrow">02 / CORE CONCEPTS</p>
+          <h2>Understand the <span>Difference.</span></h2>
+          <p>Compare processes, threads, and execution styles.</p>
+        </div>
+
+        <h3 class="subheading">Process vs Thread</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Process</th>
+                <th>Thread</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Meaning</td>
+                <td>Running program</td>
+                <td>Execution unit inside a process</td>
+              </tr>
+              <tr>
+                <td>Memory</td>
+                <td>Separate process address space</td>
+                <td>Shares process memory</td>
+              </tr>
+              <tr>
+                <td>Communication</td>
+                <td>Usually needs IPC mechanisms</td>
+                <td>Can communicate through shared data</td>
+              </tr>
+              <tr>
+                <td>Creation cost</td>
+                <td>Generally higher</td>
+                <td>Generally lower</td>
+              </tr>
+              <tr>
+                <td>Example</td>
+                <td>Browser application</td>
+                <td>Background task in the browser</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subheading">Single-threading vs Multithreading</h3>
+        <div class="comparison-grid">
+          <article class="comparison-card">
+            <span class="tag">SINGLE-THREADED</span>
+            <h3>One task at a time</h3>
+            <div class="task-track">
+              <div class="task-block">Task A</div>
+              <div class="task-block">Task B</div>
+              <div class="task-block">Task C</div>
+            </div>
+            <p>Tasks run one after another on the same thread.</p>
+          </article>
+          <article class="comparison-card highlighted">
+            <span class="tag">MULTITHREADED</span>
+            <h3>Overlapping tasks</h3>
+            <div class="task-track">
+              <div class="task-block">Task A</div>
+              <div class="task-block">Task B</div>
+              <div class="task-block">Task C</div>
+            </div>
+            <p>Multiple threads can make progress concurrently.</p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Remember:</strong> Concurrency does not always mean tasks run
+          at the exact same instant. Parallel execution depends on the available
+          processor cores and runtime scheduling.
+        </div>
+
+        <h3 class="subheading">Advantages and Disadvantages</h3>
+        <div class="pros-cons">
+          <div>
+            <h4 class="good">✓ Advantages</h4>
+            <ul>
+              <li>Helps applications stay responsive.</li>
+              <li>Supports concurrent task execution.</li>
+              <li>Can improve CPU utilization.</li>
+              <li>Useful for background work.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="bad">! Disadvantages</h4>
+            <ul>
+              <li>Debugging can be difficult.</li>
+              <li>Race conditions may occur.</li>
+              <li>Shared data needs careful coordination.</li>
+              <li>Too many threads add overhead.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="lifecycle">
+        <div class="section-heading">
+          <p class="eyebrow">03 / THREAD LIFE CYCLE</p>
+          <h2>Thread <span>Life Cycle.</span></h2>
+          <p>Java defines six thread states through the Thread.State enum.</p>
+        </div>
+
+        <div class="lifecycle">
+          <article>
+            <span>01</span>
+            <h3>NEW</h3>
+            <p>Thread object is created, but start() has not been called.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>RUNNABLE</h3>
+            <p>
+              Thread is eligible to run or is running. Java combines these ideas
+              in this state.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>BLOCKED</h3>
+            <p>Waiting to acquire a monitor lock.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>WAITING</h3>
+            <p>Waiting indefinitely for another thread's action.</p>
+          </article>
+          <article>
+            <span>05</span>
+            <h3>TIMED_WAITING</h3>
+            <p>Waiting for a specified time, for example with sleep().</p>
+          </article>
+          <article>
+            <span>06</span>
+            <h3>TERMINATED</h3>
+            <p>The thread has finished its execution.</p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Interview point:</strong> Java has no separate RUNNING value
+          in Thread.State. A thread executing on the CPU is still reported as
+          RUNNABLE.
+        </div>
+      </section>
+
+      <section class="section darker" id="examples">
+        <div class="section-heading">
+          <p class="eyebrow">04 / PRACTICAL JAVA</p>
+          <h2>Create Your First <span>Thread.</span></h2>
+          <p>Read the code, understand it, then execute it in VS Code.</p>
+        </div>
+
+        <div class="example-card">
+          <div class="example-top">
+            <div>
+              <span class="tag">EXAMPLE 01</span>
+              <h3>Using the Thread class</h3>
+            </div>
+            <button class="copy-btn" data-copy="code1">Copy Code</button>
+          </div>
+          <p class="code-description">
+            Extend Thread and override the run() method.
+          </p>
+          <pre><code id="code1">class MyThread extends Thread {
+    public void run() {
+        for (int i = 1; i &lt;= 5; i++) {
+            System.out.println("Child Thread: " + i);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyThread t = new MyThread();
+        t.start();
+
+        for (int i = 1; i &lt;= 5; i++) {
+            System.out.println("Main Thread: " + i);
+        }
+    }
+}</code></pre>
+          <div class="explanation">
+            <h4>How does it work?</h4>
+            <ol>
+              <li>
+                <code>extends Thread</code> creates a custom thread class.
+              </li>
+              <li><code>run()</code> contains the task to execute.</li>
+              <li><code>new MyThread()</code> creates a thread object.</li>
+              <li>
+                <code>start()</code> asks the JVM to start a new thread, which
+                then invokes run().
+              </li>
+              <li>
+                The main thread and child thread may interleave their output.
+              </li>
+            </ol>
+          </div>
+          <div class="output">
+            <span>ILLUSTRATIVE OUTPUT</span>
+            <pre>
+Main Thread: 1
+Child Thread: 1
+Child Thread: 2
+Main Thread: 2
+...</pre
+            >
+            <p>
+              Output order may change each time. This is only one possible
+              ordering.
+            </p>
+          </div>
+        </div>
+
+        <div class="example-card">
+          <div class="example-top">
+            <div>
+              <span class="tag">EXAMPLE 02</span>
+              <h3>Using the Runnable interface</h3>
+            </div>
+            <button class="copy-btn" data-copy="code2">Copy Code</button>
+          </div>
+          <p class="code-description">
+            Runnable represents a task that can be passed to a Thread.
+          </p>
+          <pre><code id="code2">class MyTask implements Runnable {
+    public void run() {
+        for (int i = 1; i &lt;= 5; i++) {
+            System.out.println("Task: " + i);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyTask task = new MyTask();
+        Thread t = new Thread(task);
+        t.start();
+
+        System.out.println("Main method continues");
+    }
+}</code></pre>
+          <div class="explanation">
+            <h4>Why use Runnable?</h4>
+            <ul>
+              <li>Separates the task from the Thread object.</li>
+              <li>
+                Your class can still extend another class, because Java supports
+                only single class inheritance.
+              </li>
+              <li>Runnable is widely used with executors and thread pools.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="example-card">
+          <div class="example-top">
+            <div>
+              <span class="tag">EXAMPLE 03</span>
+              <h3>start() vs run()</h3>
+            </div>
+            <button class="copy-btn" data-copy="code3">Copy Code</button>
+          </div>
+          <pre><code id="code3">class Demo extends Thread {
+    public void run() {
+        System.out.println("Executing: " +
+                           Thread.currentThread().getName());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Demo t = new Demo();
+
+        t.run();   // Runs directly on the main thread
+        t.start(); // Starts a new thread
+    }
+}</code></pre>
+          <div class="output">
+            <span>OUTPUT</span>
+            <pre>
+Executing: main
+Executing: Thread-0</pre
+            >
+            <p>
+              The default child-thread name is commonly Thread-0 for this first
+              thread.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="rules">
+        <div class="section-heading">
+          <p class="eyebrow">05 / IMPORTANT RULES</p>
+          <h2>Must-Know <span>Methods.</span></h2>
+        </div>
+        <div class="methods-grid">
+          <article>
+            <code>start()</code>
+            <p>Starts a new thread of execution.</p>
+          </article>
+          <article>
+            <code>run()</code>
+            <p>
+              Contains the task logic. Calling it directly does not start a new
+              thread.
+            </p>
+          </article>
+          <article>
+            <code>sleep(ms)</code>
+            <p>
+              Pauses the current thread for a duration, subject to scheduling.
+            </p>
+          </article>
+          <article>
+            <code>join()</code>
+            <p>Waits for a thread to finish.</p>
+          </article>
+          <article>
+            <code>currentThread()</code>
+            <p>Returns the currently executing Thread object.</p>
+          </article>
+          <article>
+            <code>getName()</code>
+            <p>Returns the thread's name.</p>
+          </article>
+        </div>
+        <div class="note warning">
+          <strong>Important:</strong> A thread can be started only once. Calling
+          start() again on a terminated thread throws
+          IllegalThreadStateException.
+        </div>
+      </section>
+
+      <section class="section quiz-section" id="interview">
+        <div class="section-heading">
+          <p class="eyebrow">06 / CHECK YOUR KNOWLEDGE</p>
+          <h2>Interview <span>Practice.</span></h2>
+          <p>Answer these beginner questions to test your understanding.</p>
+        </div>
+
+        <div class="quiz-card">
+          <p class="quiz-count" id="quizCount">QUESTION 01 / 05</p>
+          <h3 id="question">What is a thread in Java?</h3>
+          <div id="options" class="options"></div>
+          <p id="feedback" aria-live="polite"></p>
+          <button id="nextQuestion" class="primary-btn" disabled>
+            Next Question →
+          </button>
+        </div>
+
+        <div class="interview-list">
+          <h3>Quick Interview Questions</h3>
+          <details>
+            <summary>1. What is multithreading?</summary>
+            <p>
+              It allows multiple threads to make progress concurrently within a
+              process.
+            </p>
+          </details>
+          <details>
+            <summary>
+              2. What is the difference between start() and run()?
+            </summary>
+            <p>
+              start() initiates a new thread; a direct call to run() executes
+              like an ordinary method on the current thread.
+            </p>
+          </details>
+          <details>
+            <summary>
+              3. Can Java extend multiple classes to create threads?
+            </summary>
+            <p>
+              No. A class can extend only one class, so implementing Runnable is
+              another common approach.
+            </p>
+          </details>
+          <details>
+            <summary>4. What is a race condition?</summary>
+            <p>
+              It happens when the result depends on the unpredictable timing of
+              concurrent access to shared state.
+            </p>
+          </details>
+          <details>
+            <summary>
+              5. Does multithreading always make a program faster?
+            </summary>
+            <p>
+              No. Scheduling, synchronization, task type, and overhead affect
+              performance.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section class="next-part">
+        <p class="eyebrow">COMING NEXT</p>
+        <h2>Multithreading — Part 2</h2>
+        <p>
+          Synchronization, race conditions, inter-thread communication,
+          deadlock, thread priorities, and ExecutorService.
+        </p>
+        <span class="coming-label">PART 02 · ADVANCED CONCEPTS</span>
+      </section>
+    </main>
+
+    <footer>
+      <a href="#home" class="logo">THREAD<span>LAB</span></a>
+      <p>Java Multithreading Learning Series · Part 1</p>
+      <a href="#home">Back to top ↑</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
